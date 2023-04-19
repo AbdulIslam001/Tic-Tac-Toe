@@ -6,9 +6,9 @@ class TicTacToeBoard6x6 extends StatefulWidget {
   _TicTacToeBoard6x6State createState() => _TicTacToeBoard6x6State();
 }
 class _TicTacToeBoard6x6State extends State<TicTacToeBoard6x6> {
-  final List<List<String>> _board =
-  List.generate(6, (_) => List.filled(6, ''));
-
+  // final List<List<String>> _board =
+  // List.generate(6, (_) => List.filled(6, ''));
+  final List<List<String>> _board=List.generate(6, (index) => List.filled(6,''));
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,8 +45,8 @@ class _TicTacToeBoard6x6State extends State<TicTacToeBoard6x6> {
           physics: const NeverScrollableScrollPhysics(),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 6,
-            crossAxisSpacing: 8.0,
-            mainAxisSpacing: 8.0,
+            crossAxisSpacing: 4.0,
+            mainAxisSpacing: 4.0,
           ),
           itemCount: 36,
           itemBuilder: (BuildContext context, int index) {
