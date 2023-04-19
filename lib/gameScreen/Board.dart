@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tic_tac_toe_game/gameScreen/SelectGameMode.dart';
+import 'package:tic_tac_toe_game/SinglePlayer/SelectGameMode.dart';
 
 class BoardBoxes extends StatefulWidget {
  final String itemcount,crossaxiscount,title;

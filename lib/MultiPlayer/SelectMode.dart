@@ -1,17 +1,17 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:tic_tac_toe_game/imagesString.dart';
-import 'Board.dart';
-import 'gameEnterenceScreen.dart';
+import '../gameScreen/Board.dart';
+import '../gameScreen/gameEnterenceScreen.dart';
 
 
-class SelectGameMode extends StatefulWidget {
-  const SelectGameMode({Key? key}) : super(key: key);
+class SelectMode extends StatefulWidget {
+  const SelectMode({Key? key}) : super(key: key);
   @override
-  _SelectGameModeState createState() => _SelectGameModeState();
+  _SelectModeState createState() => _SelectModeState();
 }
 
-class _SelectGameModeState extends State<SelectGameMode> {
+class _SelectModeState extends State<SelectMode> {
 
   List<String> listitems = ["3x3", "6x6", "9x9"];
   String selectval = "3x3";
@@ -38,40 +38,28 @@ class _SelectGameModeState extends State<SelectGameMode> {
           SizedBox(
             height: size.height*0.00,
           ),
-          CarouselSlider(
-              items: [
-                container(Iconpic, () {}),
-                container(img6x6, () {})
-              ],
-              options: CarouselOptions(
-                reverse: true,
-                autoPlay: true,
-                // autoPlayInterval:const Duration(seconds: 3),
-                enlargeCenterPage: true,
-                autoPlayCurve: Curves.easeInOut,
-                viewportFraction: 0.6,
-                height: 350,
-              )
+          Container(
+            height: size.height/0.34,
           ),
-    DropdownButton(
-      hint: const Text("Select Grid"),
-      isDense: true,
-      icon:const Icon(Icons.arrow_drop_down,color: Colors.white,),
-      iconSize: 25,
-      dropdownColor: Colors.transparent,
-      value: selectval,
-      onChanged: (value){
-        setState(() {
-          selectval = value.toString();
-        });
-      },
-      items: listitems.map((itemone){
-        return DropdownMenuItem(
-            value: itemone,
-            child: Text(itemone,style: const TextStyle(color: Colors.white),)
-        );
-      }).toList(),
-    ),
+          DropdownButton(
+            hint: const Text("Select Grid"),
+            isDense: true,
+            icon:const Icon(Icons.arrow_drop_down,color: Colors.white,),
+            iconSize: 25,
+            dropdownColor: Colors.transparent,
+            value: selectval,
+            onChanged: (value){
+              setState(() {
+                selectval = value.toString();
+              });
+            },
+            items: listitems.map((itemone){
+              return DropdownMenuItem(
+                  value: itemone,
+                  child: Text(itemone,style: const TextStyle(color: Colors.white),)
+              );
+            }).toList(),
+          ),
           SizedBox(
             height: size.height/15,
           ),
@@ -129,19 +117,19 @@ class _SelectGameModeState extends State<SelectGameMode> {
 }
 
 container(String img,VoidCallback ontaped){
-   return Center(
-     child: GestureDetector(
+  return Center(
+    child: GestureDetector(
       onTap: ontaped,
       child: Container(
         decoration:BoxDecoration(
             borderRadius:const BorderRadius.all(Radius.circular(10)),
             image: DecorationImage(
-              alignment: Alignment.center,
+                alignment: Alignment.center,
                 image: AssetImage(img),
                 fit: BoxFit.cover
             )
         ),
       ),
-  ),
-   );
+    ),
+  );
 }

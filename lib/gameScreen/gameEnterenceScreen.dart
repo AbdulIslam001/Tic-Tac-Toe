@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tic_tac_toe_game/gameScreen/SelectGameMode.dart';
+import 'package:tic_tac_toe_game/SinglePlayer/SelectGameMode.dart';
 
 import '../cutomWidget/Button.dart';
 import '../imagesString.dart';
@@ -80,7 +80,7 @@ class _GameEntranceScreenState extends State<GameEntranceScreen> {
           SizedBox(
             height: size.height*0.05,
           ),
-          Button(icon: Icons.person,  title:"Offline",loading: _loading,ontap:(){
+          Button(icon: Icons.person,  title:"SinglePlayer",loading: _loading,ontap:(){
             setState(() {
               _loading=true;
             });
@@ -96,11 +96,11 @@ class _GameEntranceScreenState extends State<GameEntranceScreen> {
           SizedBox(
             height: MediaQuery.of(context).size.height*0.03
           ),
-          Button( icon: Icons.person_add_alt_1_rounded,title:"Online",loading:_loading1,ontap:(){},),
-          // SizedBox(
-          //     height: MediaQuery.of(context).size.height*0.03
-          // ),
-          // Button( icon: Icons.leaderboard,title:"LeaderBoard",loading:_loading2,ontap:(){},)
+          Button( icon: Icons.person_add_alt_1_rounded,title:"MultiPlayer",loading:_loading1,ontap:(){},),
+          SizedBox(
+              height: MediaQuery.of(context).size.height*0.03
+          ),
+          Button( icon: Icons.leaderboard,title:"LeaderBoard",loading:_loading2,ontap:(){},)
         ],
       ),
     );
