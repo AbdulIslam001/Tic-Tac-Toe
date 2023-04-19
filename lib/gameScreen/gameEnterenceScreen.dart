@@ -11,6 +11,7 @@ class GameEntranceScreen extends StatefulWidget {
 }
 bool _loading=false;
 bool _loading1=false;
+bool _loading2=false;
 class _GameEntranceScreenState extends State<GameEntranceScreen> {
   @override
   Widget build(BuildContext context) {
@@ -79,7 +80,7 @@ class _GameEntranceScreenState extends State<GameEntranceScreen> {
           SizedBox(
             height: size.height*0.05,
           ),
-          Button(icon: Icons.person,  title:"Singleplayer",loading: _loading,ontap:(){
+          Button(icon: Icons.person,  title:"Offline",loading: _loading,ontap:(){
             setState(() {
               _loading=true;
             });
@@ -95,11 +96,11 @@ class _GameEntranceScreenState extends State<GameEntranceScreen> {
           SizedBox(
             height: MediaQuery.of(context).size.height*0.03
           ),
-          Button( icon: Icons.person_add_alt_1_rounded,title:"Multiplayers",loading:_loading1,ontap:(){},),
-          SizedBox(
-              height: MediaQuery.of(context).size.height*0.03
-          ),
-          Button( icon: Icons.leaderboard,title:"LeaderBoard",loading:_loading1,ontap:(){},)
+          Button( icon: Icons.person_add_alt_1_rounded,title:"Online",loading:_loading1,ontap:(){},),
+          // SizedBox(
+          //     height: MediaQuery.of(context).size.height*0.03
+          // ),
+          // Button( icon: Icons.leaderboard,title:"LeaderBoard",loading:_loading2,ontap:(){},)
         ],
       ),
     );

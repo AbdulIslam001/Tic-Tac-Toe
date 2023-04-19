@@ -1,9 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:tic_tac_toe_game/imagesString.dart';
-
-import 'Board6x6.dart';
-import 'Borad3x3.dart';
+import 'Board.dart';
+import 'gameEnterenceScreen.dart';
 
 
 class SelectGameMode extends StatefulWidget {
@@ -14,7 +13,7 @@ class SelectGameMode extends StatefulWidget {
 
 class _SelectGameModeState extends State<SelectGameMode> {
 
-  List<String> listitems = ["3x3", "6x6", "9x9", "11x11"];
+  List<String> listitems = ["3x3", "6x6", "9x9"];
   String selectval = "3x3";
   bool loading=false;
   @override
@@ -27,7 +26,10 @@ class _SelectGameModeState extends State<SelectGameMode> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(icon:const Icon(Icons.arrow_back_ios),onPressed:(){
-          Navigator.pop(context);
+          Navigator.push(context,
+              MaterialPageRoute(builder: (BuildContext context) {
+                return const GameEntranceScreen();
+              }));
         } ),
       ),
       backgroundColor: Colors.black,
@@ -38,8 +40,8 @@ class _SelectGameModeState extends State<SelectGameMode> {
           ),
           CarouselSlider(
               items: [
-                container(Iconpic, () { print("3x3");}),
-                container(img6x6, () { print("6x6");})
+                container(Iconpic, () {}),
+                container(img6x6, () {})
               ],
               options: CarouselOptions(
                 reverse: true,
@@ -51,17 +53,6 @@ class _SelectGameModeState extends State<SelectGameMode> {
                 height: 350,
               )
           ),
-          // Container(
-          //   width: size.width*0.9,
-          //   height: size.height*0.45,
-          //   decoration:const BoxDecoration(
-          //     image: DecorationImage(
-          //       fit: BoxFit.cover,
-          //       image: AssetImage(Iconpic),
-          //     )
-          //   ),
-          // ),
-
     DropdownButton(
       hint: const Text("Select Grid"),
       isDense: true,
@@ -90,12 +81,17 @@ class _SelectGameModeState extends State<SelectGameMode> {
                 if(selectval=="3x3") {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (BuildContext context) {
-                        return TicTacToeBoard();
+                        return BoardBoxes(crossaxiscount: "3", itemcount: "9",title: selectval,);
                       }));
-                }else{
+                }else if(selectval=="6x6"){
                   Navigator.push(context,
                       MaterialPageRoute(builder: (BuildContext context) {
-                        return TicTacToeBoard6x6();
+                        return BoardBoxes(crossaxiscount: "6",itemcount:"36",title: selectval,);
+                      }));
+                }else if(selectval=="9x9"){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (BuildContext context) {
+                        return BoardBoxes(crossaxiscount:"9" ,itemcount: "81",title: selectval,);
                       }));
                 }
               }
