@@ -1,9 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:tic_tac_toe_game/cutomWidget/Button.dart';
 import 'package:tic_tac_toe_game/imagesString.dart';
 
-import 'gameEnterenceScreen.dart';
+import 'Board6x6.dart';
+import 'Borad3x3.dart';
+
 
 class SelectGameMode extends StatefulWidget {
   const SelectGameMode({Key? key}) : super(key: key);
@@ -89,12 +90,12 @@ class _SelectGameModeState extends State<SelectGameMode> {
                 if(selectval=="3x3") {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (BuildContext context) {
-                        return const GameEntranceScreen();
+                        return TicTacToeBoard();
                       }));
                 }else{
                   Navigator.push(context,
                       MaterialPageRoute(builder: (BuildContext context) {
-                        return const SelectGameMode();
+                        return TicTacToeBoard6x6();
                       }));
                 }
               }
