@@ -86,12 +86,16 @@ class _SelectGameModeState extends State<SelectGameMode> {
           GestureDetector(
             onTap: (){
               if(selectval.isNotEmpty){
-                if(selectval=="3x3"){
-                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
-                    return const GameEntranceScreen();
-                  }));
+                if(selectval=="3x3") {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (BuildContext context) {
+                        return const GameEntranceScreen();
+                      }));
                 }else{
-                  return ;
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (BuildContext context) {
+                        return const SelectGameMode();
+                      }));
                 }
               }
             },
