@@ -39,6 +39,12 @@ dependencies:
   connectivity_plus: ^3.0.4
   carousel_slider: ^4.2.1
   shared_preferences: ^2.1.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  image_path: "assets/Iconpic.jpg"
+  android: true
+  ios: true
 
 dev_dependencies:
   flutter_test:

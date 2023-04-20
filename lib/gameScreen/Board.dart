@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tic_tac_toe_game/SinglePlayer/SelectGameMode.dart';
 
 class BoardBoxes extends StatefulWidget {
- final String itemcount,crossaxiscount,title;
-  const BoardBoxes({Key? key,required this.crossaxiscount,required this.itemcount,required this.title}):super(key: key);
+ final String crossaxiscount,title;
+  const BoardBoxes({Key? key,required this.crossaxiscount,required this.title}):super(key: key);
   @override
   _BoardBoxesState createState() => _BoardBoxesState();
 }

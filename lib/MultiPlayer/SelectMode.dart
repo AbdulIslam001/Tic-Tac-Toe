@@ -1,6 +1,4 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:tic_tac_toe_game/imagesString.dart';
 import '../gameScreen/Board.dart';
 import '../gameScreen/gameEnterenceScreen.dart';
 
@@ -69,17 +67,17 @@ class _SelectModeState extends State<SelectMode> {
                 if(selectval=="3x3") {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (BuildContext context) {
-                        return BoardBoxes(crossaxiscount: "3", itemcount: "9",title: selectval,);
+                        return BoardBoxes(crossaxiscount: "3",title: selectval,);
                       }));
                 }else if(selectval=="6x6"){
                   Navigator.push(context,
                       MaterialPageRoute(builder: (BuildContext context) {
-                        return BoardBoxes(crossaxiscount: "6",itemcount:"36",title: selectval,);
+                        return BoardBoxes(crossaxiscount: "6",title: selectval,);
                       }));
                 }else if(selectval=="9x9"){
                   Navigator.push(context,
                       MaterialPageRoute(builder: (BuildContext context) {
-                        return BoardBoxes(crossaxiscount:"9" ,itemcount: "81",title: selectval,);
+                        return BoardBoxes(crossaxiscount:"9" ,title: selectval,);
                       }));
                 }
               }

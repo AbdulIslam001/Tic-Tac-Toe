@@ -81,17 +81,17 @@ class _SelectGameModeState extends State<SelectGameMode> {
                 if(selectval=="3x3") {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (BuildContext context) {
-                        return BoardBoxes(crossaxiscount: "3", itemcount: "9",title: selectval,);
+                        return BoardBoxes(crossaxiscount: "3",title: selectval,);
                       }));
                 }else if(selectval=="6x6"){
                   Navigator.push(context,
                       MaterialPageRoute(builder: (BuildContext context) {
-                        return BoardBoxes(crossaxiscount: "6",itemcount:"36",title: selectval,);
+                        return BoardBoxes(crossaxiscount: "6",title: selectval,);
                       }));
                 }else if(selectval=="9x9"){
                   Navigator.push(context,
                       MaterialPageRoute(builder: (BuildContext context) {
-                        return BoardBoxes(crossaxiscount:"9" ,itemcount: "81",title: selectval,);
+                        return BoardBoxes(crossaxiscount:"9",title: selectval,);
                       }));
                 }
               }
