@@ -40,11 +40,22 @@ dependencies:
   carousel_slider: ^4.2.1
   shared_preferences: ^2.1.0
   flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.2.19
 
 flutter_launcher_icons:
-  image_path: "assets/Iconpic.jpg"
+  image_path: "assets/icon.jpg"
   android: true
   ios: true
+flutter_native_splash:
+  android: true
+  ios: true
+  web: true
+  color : "#FFCC00"
+#  background_image : "assets/iconpic.jpg"
+  image : assets/icon.jpg
+  android_gravity : center
+  ios_content_mode : center
+  web_image_mode : center
 
 dev_dependencies:
   flutter_test:
