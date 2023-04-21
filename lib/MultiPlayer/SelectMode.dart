@@ -30,7 +30,7 @@ class _SelectModeState extends State<SelectMode> {
               }));
         } ),
       ),
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.transparent,
       body:Column(
         children: [
           SizedBox(

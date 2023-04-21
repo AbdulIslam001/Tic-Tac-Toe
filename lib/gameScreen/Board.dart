@@ -19,6 +19,7 @@ class _BoardBoxesState extends State<BoardBoxes> {
   }
   @override
   Widget build(BuildContext context) {
+    Size size=MediaQuery.of(context).size;
     return Scaffold(
       appBar:AppBar(
         leading:IconButton(onPressed: (){
@@ -44,8 +45,28 @@ class _BoardBoxesState extends State<BoardBoxes> {
       ) ,
       body: Column(
         children: [
-          const SizedBox(
-            height: 30,
+           SizedBox(
+            height: size.height/15,
+          ),
+          Row(
+            children: [
+              const SizedBox(
+                width: 10,
+              ),
+               const CircleAvatar(
+                 radius: 35,
+//                 backgroundColor: Colors.black,
+               ),
+              SizedBox(
+                  width:size.width*0.555,
+               ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child:Ico,
+                )
+            ],
           ),
           GridView.builder(
             shrinkWrap: true,
@@ -93,5 +114,8 @@ class _BoardBoxesState extends State<BoardBoxes> {
     }
   }
 }
-
-//  const Board({required Key key,required this.itemcount,required}):super(key: key);
+// container(){
+//   return Container(
+//
+//   );
+// }

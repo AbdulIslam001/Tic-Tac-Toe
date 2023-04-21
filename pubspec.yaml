@@ -43,19 +43,20 @@ dependencies:
   flutter_native_splash: ^2.2.19
 
 flutter_launcher_icons:
-  image_path: "assets/icon.jpg"
+  image_path: "assets/Iconpic.jpg"
   android: true
   ios: true
 flutter_native_splash:
   android: true
   ios: true
   web: true
-  color : "#FFCC00"
+  color : "000000"
 #  background_image : "assets/iconpic.jpg"
-  image : assets/icon.jpg
+  image : assets/iconpic.jpg
   android_gravity : center
   ios_content_mode : center
   web_image_mode : center
+  fullscreen : true
 
 dev_dependencies:
   flutter_test:
