@@ -12,7 +12,25 @@ class BoardBoxes extends StatefulWidget {
 class _BoardBoxesState extends State<BoardBoxes> {
   late final List<List<String>> _board;
   int tap=0;
+  String winner='';
   late StreamSubscription timer;
+  checkWinner(){
+    for(int i=0;i<3;i++){
+      if(_board[i][0]!=''){
+        if(_board[i][0]==_board[i][1] &&_board[i][1]==_board[i][2]){
+          if(_board[i][0]=='X'){
+            winner='Opponent have won';
+          }else{
+            winner='You Rocked! you won';
+          }
+        }
+      }
+    }
+    for(int j=0;j<3;j++){
+
+    }
+
+  }
   @override
   void initState() {
     // TODO: implement initState
@@ -72,7 +90,8 @@ class _BoardBoxesState extends State<BoardBoxes> {
                 ],
               ),
               SizedBox(
-                  width:size.width*0.553,
+                  width:size.width*0.54,
+                child: Center(child: Text(winner)),
                ),
                 Column(
                   children: [
@@ -130,20 +149,19 @@ class _BoardBoxesState extends State<BoardBoxes> {
           _board[row][col] = 'X';
         });
       }
+      // if(_board[0][0]=='X' &&_board[1][1]=='X' && _board[2][2]=='X' || _board[0][1]=='X' &&_board[1][0]=='X' && _board[2][0]=='X'||_board[0][0]=='X' &&_board[0][1]=='X' && _board[0][2]=='X'){
+      //   winner="Opponent Won";
+      //}
     }else{
       if (_board[row][col] == '') {
         setState(() {
           _board[row][col] = 'O';
         });
       }
+      // if(_board[0][0]=='O' &&_board[1][1]=='O' && _board[2][2]=='O' || _board[0][1]=='O' &&_board[1][0]=='O' && _board[2][0]=='O'||_board[0][0]=='O' &&_board[0][1]=='O' && _board[0][2]=='O'){
+      //   winner="You Rocked! you won";
+      //}
     }
+    checkWinner();
   }
 }
-time(){
-  return DateTime.now().second.toString();
-}
-// container(){
-//   return Container(
-//
-//   );
-// }
