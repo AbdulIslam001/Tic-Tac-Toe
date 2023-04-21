@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:tic_tac_toe_game/SinglePlayer/SelectGameMode.dart';
 
@@ -10,6 +12,7 @@ class BoardBoxes extends StatefulWidget {
 class _BoardBoxesState extends State<BoardBoxes> {
   late final List<List<String>> _board;
   int tap=0;
+  late StreamSubscription timer;
   @override
   void initState() {
     // TODO: implement initState
@@ -46,27 +49,49 @@ class _BoardBoxesState extends State<BoardBoxes> {
       body: Column(
         children: [
            SizedBox(
-            height: size.height/15,
+            height: size.height/25,
           ),
           Row(
             children: [
-              const SizedBox(
-                width: 10,
-              ),
-               const CircleAvatar(
-                 radius: 35,
-//                 backgroundColor: Colors.black,
-               ),
               SizedBox(
-                  width:size.width*0.555,
-               ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
+                width: size.width/45,
+              ),
+              Column(
+                children: [
+                  const Text("You"),
+                  Container(
+                    width:size.width/5,
+                    height: size.height/10,
+                    decoration: BoxDecoration(
+                      color: Colors.black12,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child:const Center(child: Text("O",style: TextStyle(color: Colors.red,fontSize: 40))),
                   ),
-                  child:Ico,
+//                  Stream.periodic(Duration(seconds: 1),(int count){})
+                ],
+              ),
+              SizedBox(
+                  width:size.width*0.553,
+               ),
+                Column(
+                  children: [
+                    const Text("Opponent"),
+                    Container(
+                      width:size.width/5,
+                      height: size.height/10,
+                      decoration: BoxDecoration(
+                        color: Colors.black12,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child:const Center(child: Text("X",style: TextStyle(color: Colors.red,fontSize: 40))),
+                    ),
+                  ],
                 )
             ],
+          ),
+          SizedBox(
+            height: size.height*0.02,
           ),
           GridView.builder(
             shrinkWrap: true,
@@ -113,6 +138,9 @@ class _BoardBoxesState extends State<BoardBoxes> {
       }
     }
   }
+}
+time(){
+  return DateTime.now().second.toString();
 }
 // container(){
 //   return Container(
