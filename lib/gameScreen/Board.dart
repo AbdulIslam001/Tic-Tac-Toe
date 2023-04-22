@@ -14,22 +14,50 @@ class _BoardBoxesState extends State<BoardBoxes> {
   int tap=0;
   String winner='';
   late StreamSubscription timer;
-  checkWinner(){
-    for(int i=0;i<3;i++){
+  checkWinner(int end){
+    for(int i=0;i<end;i++){
       if(_board[i][0]!=''){
         if(_board[i][0]==_board[i][1] &&_board[i][1]==_board[i][2]){
           if(_board[i][0]=='X'){
             winner='Opponent have won';
           }else{
             winner='You Rocked! you won';
-          }
+            }
         }
       }
     }
-    for(int j=0;j<3;j++){
-
+    for(int j=0;j<end;j++){
+      if(_board[0][j]!=''){
+        if(_board[0][j]==_board[1][j]&&_board[1][j]==_board[2][j]){
+          if(_board[0][j]=='X'){
+            winner='Opponent have won';
+           }else{
+            winner='You Rocked! you won';
+           }
+        }
+      }
     }
 
+      if(_board[0][0]!='' &&_board[0][0]==_board[1][1]&&_board[1][1]==_board[2][2]){
+        if(_board[0][0]=='X'){
+          winner='Opponent have won';
+        }else{
+        winner='You Rock! you won';
+        }
+        // else if(_board[0][2]=='X'){
+        //   winner='Opponent have won';
+        // }else if( _board[0][0]=='O'){
+        //   winner='You rock! you won';
+        // }else if( _board[0][2]=='O'){
+        //   winner='You rock! you won';
+        // }
+    }else if(_board[0][2]!='' &&_board[0][2]==_board[1][1]&&_board[1][1]==_board[2][0]){
+        if(_board[0][2]=='X'){
+          winner='Opponent have won';
+        }else{
+          winner='You Rock! you won';
+        }
+      }
   }
   @override
   void initState() {
@@ -149,19 +177,22 @@ class _BoardBoxesState extends State<BoardBoxes> {
           _board[row][col] = 'X';
         });
       }
-      // if(_board[0][0]=='X' &&_board[1][1]=='X' && _board[2][2]=='X' || _board[0][1]=='X' &&_board[1][0]=='X' && _board[2][0]=='X'||_board[0][0]=='X' &&_board[0][1]=='X' && _board[0][2]=='X'){
-      //   winner="Opponent Won";
-      //}
     }else{
       if (_board[row][col] == '') {
         setState(() {
           _board[row][col] = 'O';
         });
       }
-      // if(_board[0][0]=='O' &&_board[1][1]=='O' && _board[2][2]=='O' || _board[0][1]=='O' &&_board[1][0]=='O' && _board[2][0]=='O'||_board[0][0]=='O' &&_board[0][1]=='O' && _board[0][2]=='O'){
-      //   winner="You Rocked! you won";
-      //}
     }
-    checkWinner();
+    int x=0;
+    if(widget.title=='3x3'){
+      x=3;
+    }else if(widget.title=='6x6'){
+      x=6;
+    }else if(widget.title=='9x9'){
+      x=9;
+    }
+
+    checkWinner(x);
   }
 }
