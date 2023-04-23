@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tic_tac_toe_game/SinglePlayer/SelectGameMode.dart';
 
+import '../Offline/SelectGameMode.dart';
 import '../cutomWidget/Button.dart';
 import '../imagesString.dart';
 class GameEntranceScreen extends StatefulWidget {
