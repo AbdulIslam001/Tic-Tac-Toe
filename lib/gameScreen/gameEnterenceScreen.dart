@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tic_tac_toe_game/Online/SelectMode.dart';
 
 import '../Offline/SelectGameMode.dart';
 import '../cutomWidget/Button.dart';
@@ -96,7 +97,20 @@ class _GameEntranceScreenState extends State<GameEntranceScreen> {
           SizedBox(
             height: MediaQuery.of(context).size.height*0.03
           ),
-          Button( icon: Icons.person_add_alt_1_rounded,title:"Online",loading:_loading1,ontap:(){},),
+          Button( icon: Icons.person_add_alt_1_rounded,title:"Online",loading:_loading1,ontap:(){
+            setState(() {
+            _loading1=true;
+              });
+            Future.delayed(const Duration(seconds: 2),() {
+            Navigator.push(context,MaterialPageRoute(builder: (context){
+               return const SelectMode();
+            }));
+            setState(() {
+              _loading1=false;
+                });
+              },);
+            },
+          ),
           SizedBox(
               height: MediaQuery.of(context).size.height*0.03
           ),

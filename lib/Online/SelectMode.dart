@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../gameScreen/Board.dart';
 import '../gameScreen/gameEnterenceScreen.dart';
+import '../imagesString.dart';
 
 
 class SelectMode extends StatefulWidget {
@@ -33,12 +34,7 @@ class _SelectModeState extends State<SelectMode> {
       backgroundColor: Colors.transparent,
       body:Column(
         children: [
-          SizedBox(
-            height: size.height*0.00,
-          ),
-          Container(
-            height: size.height/0.34,
-          ),
+          const Image(image: AssetImage(Iconpic)),
           DropdownButton(
             hint: const Text("Select Grid"),
             isDense: true,
@@ -82,29 +78,31 @@ class _SelectModeState extends State<SelectMode> {
                 }
               }
             },
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.orangeAccent,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              height: size.height*0.06,
-              width: size.width*0.8,
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: size.width/10,
-                  ),
-                  const Icon(Icons.play_arrow_rounded,size: 50,color: Colors.red),
-                  SizedBox(
-                    width:size.width*0.10,
-                  ),
-                  Center(child:
-                  loading ? const CircularProgressIndicator(
-                    strokeWidth: 3,
-                    color: Colors.red,
-                  )
-                      : const Text("Play",style:TextStyle(color: Colors.red,fontSize: 30),)),
-                ],
+            child: Center(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.orangeAccent,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                height: size.height*0.06,
+                width: size.width*0.8,
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: size.width/10,
+                    ),
+                    const Icon(Icons.play_arrow_rounded,size: 50,color: Colors.red),
+                    SizedBox(
+                      width:size.width*0.10,
+                    ),
+                    Center(child:
+                    loading ? const CircularProgressIndicator(
+                      strokeWidth: 3,
+                      color: Colors.red,
+                    )
+                        : const Text("Play",style:TextStyle(color: Colors.red,fontSize: 30),)),
+                  ],
+                ),
               ),
             ),
           ),
