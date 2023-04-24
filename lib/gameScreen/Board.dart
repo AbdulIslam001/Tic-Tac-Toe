@@ -124,19 +124,25 @@ class _BoardBoxesState extends State<BoardBoxes> {
       ),
     );
   }
-
   void _handleTap(int row, int col) {
-    tap++;
     if(tap%2==0){
       if (_board[row][col] == '') {
         setState(() {
-          _board[row][col] = 'X';
+          _board[row][col] = 'O';
+        });
+      }else{
+        setState(() {
+          tap=1;
         });
       }
     }else{
       if (_board[row][col] == '') {
         setState(() {
-          _board[row][col] = 'O';
+          _board[row][col] = 'X';
+        });
+      }else{
+        setState(() {
+          tap=2;
         });
       }
     }
@@ -148,6 +154,7 @@ class _BoardBoxesState extends State<BoardBoxes> {
     }else if(widget.title=='9x9'){
       checkWinner9x9();
     }
+    tap++;
   }
   checkWinner3x3(){
 
@@ -224,7 +231,6 @@ class _BoardBoxesState extends State<BoardBoxes> {
     }
   }
   checkWinner6x6(){
-
     //Row
     for(int i=0;i<6;i++){
       if(_board[i][0]!=''){
