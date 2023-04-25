@@ -531,14 +531,14 @@ class _BoardBoxesState extends State<BoardBoxes> {
   }
   checkForWin9x9() {
     // Check rows
-    for (int row = 0; row < 6; row++) {
-      for (int col = 0; col < 2; col++) {
-        if (_board[row][col] != "" &&
-            _board[row][col] == _board[row][col + 1] &&
-            _board[row][col] == _board[row][col + 2] &&
-            _board[row][col] == _board[row][col + 3] &&
-            _board[row][col] == _board[row][col + 4]) {
-          if(_board[row][col] =='X'){
+    for (int i = 0; i < 6; i++) {
+      for (int j = 0; j < 2; j++) {
+        if (_board[i][j] != "" &&
+            _board[i][j] == _board[i][j + 1] &&
+            _board[i][j] == _board[i][j + 2] &&
+            _board[i][j] == _board[i][j + 3] &&
+            _board[i][j] == _board[i][j + 4]) {
+          if(_board[i][j] =='X'){
             winner='Opponent have won';
             Navigator.push(context,
                 MaterialPageRoute(builder: (BuildContext context) {
@@ -556,14 +556,14 @@ class _BoardBoxesState extends State<BoardBoxes> {
     }
 
     // Check columns
-    for (int col = 0; col < 6; col++) {
-      for (int row = 0; row < 2; row++) {
-        if (_board[row][col] != "" &&
-            _board[row][col] == _board[row + 1][col] &&
-            _board[row][col] == _board[row + 2][col] &&
-            _board[row][col] == _board[row + 3][col] &&
-            _board[row][col] == _board[row + 4][col]) {
-          if(_board[row][col] =='X'){
+    for (int i = 0; i < 6; i++) {
+      for (int j = 0; j < 2; j++) {
+        if (_board[j][i] != "" &&
+            _board[j][i] == _board[j + 1][i] &&
+            _board[j][i] == _board[j + 2][i] &&
+            _board[j][i] == _board[j + 3][i] &&
+            _board[j][i] == _board[j + 4][i]) {
+          if(_board[j][i] =='X'){
             winner='Opponent have won';
             Navigator.push(context,
                 MaterialPageRoute(builder: (BuildContext context) {
@@ -581,14 +581,14 @@ class _BoardBoxesState extends State<BoardBoxes> {
     }
 
     // Check diagonals (top-left to bottom-right)
-    for (int row = 0; row < 2; row++) {
-      for (int col = 0; col < 2; col++) {
-        if (_board[row][col] != "" &&
-            _board[row][col] == _board[row + 1][col + 1] &&
-            _board[row][col] == _board[row + 2][col + 2] &&
-            _board[row][col] == _board[row + 3][col + 3] &&
-            _board[row][col] == _board[row + 4][col + 4]) {
-          if(_board[row][col] =='X'){
+    for (int i = 0; i < 2; i++) {
+      for (int j = 0; j < 2; j++) {
+        if (_board[i][j] != "" &&
+            _board[i][j] == _board[i + 1][j + 1] &&
+            _board[i][j] == _board[i + 2][j + 2] &&
+            _board[i][j] == _board[i + 3][j + 3] &&
+            _board[i][j] == _board[i + 4][j + 4]) {
+          if(_board[i][j] =='X'){
             winner='Opponent have won';
             Navigator.push(context,
                 MaterialPageRoute(builder: (BuildContext context) {
@@ -606,13 +606,13 @@ class _BoardBoxesState extends State<BoardBoxes> {
     }
 
     // Check diagonals (top-right to bottom-left)
-    for (int row = 0; row < 2; row++) {
-      for (int col = 4; col < 6; col++) {
-        if (_board[row][col] != "" &&
-            _board[row][col] == _board[row + 1][col - 1] &&
-            _board[row][col] == _board[row + 2][col - 2] &&
-            _board[row][col] == _board[row + 3][col - 3]) {
-          if(_board[row][col] =='X'){
+    for (int i = 0; i < 2; i++) {
+      for (int j = 4; j < 6; j++) {
+        if (_board[i][j] != "" &&
+            _board[i][j] == _board[i + 1][j - 1] &&
+            _board[i][j] == _board[i + 2][j - 2] &&
+            _board[i][j] == _board[i + 3][j - 3]) {
+          if(_board[i][j] =='X'){
             winner='Opponent have won';
             Navigator.push(context,
                 MaterialPageRoute(builder: (BuildContext context) {
