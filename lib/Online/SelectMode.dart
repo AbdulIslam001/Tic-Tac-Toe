@@ -129,3 +129,4 @@ container(String img,VoidCallback ontaped){
     ),
   );
 }
+//https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=70c1baa985554326b5cbe3719afbbe56

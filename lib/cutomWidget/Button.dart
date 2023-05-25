@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 class Button extends StatelessWidget {
   final String title;
   final VoidCallback ontap;
-  final IconData icon;
+  final IconData? icon;
   bool loading =false;
-  Button({Key? key,required this.title , required this.ontap,required this.icon ,  this.loading=false}) : super(key: key);
+  Button({Key? key,required this.title , required this.ontap, this.icon ,  this.loading=false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class Button extends StatelessWidget {
             color: Colors.orangeAccent,
             borderRadius: BorderRadius.circular(15),
           ),
-          height: size.height*0.05,
+          height: size.height*0.06,
           width: size.width*0.8,
           child: Row(
             children: [

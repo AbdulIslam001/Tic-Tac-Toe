@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tic_tac_toe_game/gameScreen/resultScreen.dart';
 import 'package:tic_tac_toe_game/profile.dart';
-
+// import 'package:http/http.dart' as http;
 import '../Offline/SelectGameMode.dart';
 
 class BoardBoxes extends StatefulWidget {
@@ -164,8 +164,8 @@ class _BoardBoxesState extends State<BoardBoxes> {
       checkForWin6x6();
       // checkWinner6x6();
     } else if (widget.title == '9x9') {
-   //   checkWinner9x9();
-      checkForWin9x9();
+      checkWinner9x9();
+    //  checkForWin9x9();
     }
     tap++;
   }
@@ -581,7 +581,7 @@ class _BoardBoxesState extends State<BoardBoxes> {
     }
 
     // Check diagonals (top-left to bottom-right)
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 5; i++) {
       for (int j = 0; j < 2; j++) {
         if (_board[i][j] != "" &&
             _board[i][j] == _board[i + 1][j + 1] &&
@@ -612,14 +612,14 @@ class _BoardBoxesState extends State<BoardBoxes> {
             _board[i][j] == _board[i + 1][j - 1] &&
             _board[i][j] == _board[i + 2][j - 2] &&
             _board[i][j] == _board[i + 3][j - 3]) {
-          if(_board[i][j] =='X'){
-            winner='Opponent have won';
+          if (_board[i][j] == 'X') {
+            winner = 'Opponent have won';
             Navigator.push(context,
                 MaterialPageRoute(builder: (BuildContext context) {
                   return resultScreen(result: winner);
                 }));
-          }else{
-            winner='You Rocked! you Won';
+          } else {
+            winner = 'You Rocked! you Won';
             Navigator.push(context,
                 MaterialPageRoute(builder: (BuildContext context) {
                   return resultScreen(result: winner);
@@ -627,6 +627,25 @@ class _BoardBoxesState extends State<BoardBoxes> {
           }
         }
       }
+      // }for(int i=8;i>4;i++){
+      //   for(int j=0;j<5;j++){
+      //     if(_board[i][j]!=''&&_board[i][j]==_board[i-1][j+1]&&_board[i][j]==_board[i-2][j+2]&&_board[i][j]==_board[i-3][j+3]&&_board[i][j]==_board[i-4][j+4]){
+      //       if(_board[i][j]=='X'){
+      //         winner='Opponent Hava Won';
+      //         Navigator.push(context,
+      //             MaterialPageRoute(builder: (BuildContext context) {
+      //               return resultScreen(result: winner);
+      //             }));
+      //       }else{
+      //         winner='You Rocked! You Won';
+      //         Navigator.push(context,
+      //             MaterialPageRoute(builder: (BuildContext context) {
+      //               return resultScreen(result: winner);
+      //             }));
+      //       }
+      //     }
+      //   }
+      // }
     }
   }
 }

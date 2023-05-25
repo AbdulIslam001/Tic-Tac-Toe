@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tic_tac_toe_game/Online/SelectMode.dart';
+import 'package:tic_tac_toe_game/gameScreen/JoiningScreen.dart';
 import 'package:tic_tac_toe_game/profile.dart';
 
 import '../Offline/SelectGameMode.dart';
@@ -81,18 +82,18 @@ class _GameEntranceScreenState extends State<GameEntranceScreen> {
                 )
               ),
             ),
-            Container(
-              height:size.height*0.3,
-              width:size.width*1,
+/*            Container(
+              // height:size.height*0.3,
+              // width:size.width*1,
               decoration:const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage(MSIMG),
-                    fit: BoxFit.fill
+                    fit: BoxFit.cover
                   )
               ),
-            ),
+            ),*/
             SizedBox(
-              height: size.height*0.05,
+              height: size.height*0.15,
             ),
             Button(icon: Icons.person,  title:"Offline",loading: _loading,ontap:(){
               setState(() {
@@ -111,25 +112,14 @@ class _GameEntranceScreenState extends State<GameEntranceScreen> {
               height: MediaQuery.of(context).size.height*0.03
             ),
             Button( icon: Icons.person_add_alt_1_rounded,title:"Online",loading:_loading1,ontap:(){
-              setState(() {
-              _loading1=true;
-                });
-              Future.delayed(const Duration(seconds: 2),() {
               Navigator.push(context,MaterialPageRoute(builder: (context){
-                 return const SelectMode();
+                return const JoiningScreen();
               }));
-              setState(() {
-                _loading1=false;
-                  });
-                },);
-              },
-            ),
+            },),
             SizedBox(
                 height: MediaQuery.of(context).size.height*0.03
             ),
-            Button( icon: Icons.leaderboard,title:"Tournament",loading:_loading2,ontap:(){
-
-            },)
+            Button( icon: Icons.leaderboard,title:"Tournament",loading:_loading2,ontap:(){},)
           ],
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tic_tac_toe_game/gameScreen/gameEnterenceScreen.dart';
 import 'package:tic_tac_toe_game/splashScreens/startingSplashScreen.dart';
 
 void main() {
@@ -8,7 +9,8 @@ void main() {
       //   primarySwatch: Colors.orange,
       // ),
       debugShowCheckedModeBanner: false,
-      home: StartingSplashScreen(),
+      home:GameEntranceScreen()
+      //StartingSplashScreen(),
     ),
   );
 }
