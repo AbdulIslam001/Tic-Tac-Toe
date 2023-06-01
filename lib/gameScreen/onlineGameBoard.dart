@@ -14,7 +14,7 @@ class OnlineBoardBoxes extends StatefulWidget {
   _OnlineBoardBoxesState createState() => _OnlineBoardBoxesState();
 }
 class _OnlineBoardBoxesState extends State<OnlineBoardBoxes> {
-  late final List<List<String>> _board;
+  late List<List<String>> _board;
   String winner = '';
   late List<List<String>> receivedData;
   GlobalKey<State> waitingDialogKey = GlobalKey<State>();
@@ -51,25 +51,26 @@ class _OnlineBoardBoxesState extends State<OnlineBoardBoxes> {
         List.filled(int.parse(widget.crossaxiscount), ''));
   }
  late int id;
-String you='';
-String opponent='';
+String you='X';
+String opponent='O';
   @override
   Widget build(BuildContext context) {
     String receivedId=widget.symbol;
     if(receivedId=='0'){
       setState(() {
+        print(widget.symbol);
         id=int.parse(widget.symbol);
         you='O';
         opponent='X';
       });
-   //   showWaitingDialog(context);
-    }else if(receivedId=='1'){
+    //  showWaitingDialog(context);
+    }else{
       setState(() {
-        id=int.parse(widget.symbol);
+        id=1;
         opponent='O';
         you='X';
       });
-     // secondPlayerJoined();
+   //   secondPlayerJoined();
     }
     receivedId='';
     Size size = MediaQuery
@@ -170,12 +171,14 @@ String opponent='';
                 String data=_board[row][col];
                 return GestureDetector(
                   onTap: (){
-                    _handleTap(row, col);
+                    setState(() {
+                      _handleTap(row, col);
+                    });
                   },
                   child: Container(
                     color: Colors.black,
                     child: Center(
-                      child: Text(data, style: const TextStyle(
+                      child: Text(_board[row][col], style: const TextStyle(
                           fontSize: 35, color: Colors.white)),
                     ),
                   ),
@@ -200,14 +203,17 @@ String opponent='';
     widget.socket.write(data);
   }*/
   void _handleTap(int row, int col) {
+    print(_board);
+    print(row);
+    print(col);
     if(_board[row][col]=='' && id==0){
         setState(() {
-          _board[row][col]=='O';
+          _board[row][col]=you.toString();
         });
     }else if(_board[row][col]==''){
       if(id==1){
         setState(() {
-          _board[row][col]=='X';
+          _board[row][col]=you.toString();
         });
       }
     }
@@ -217,8 +223,7 @@ String opponent='';
     };
 
     String json = jsonEncode(msg);
-   // String data=jsonEncode(json);
-    widget.socket.write(json);
+    widget.socket.write(json.toString());
     checkForWin6x6();
   }
   checkForWin6x6() {
