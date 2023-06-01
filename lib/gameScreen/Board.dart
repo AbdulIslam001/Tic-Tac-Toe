@@ -1,12 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:tic_tac_toe_game/gameScreen/resultScreen.dart';
 import 'package:tic_tac_toe_game/profile.dart';
-// import 'package:http/http.dart' as http;
 import '../Offline/SelectGameMode.dart';
 
 class BoardBoxes extends StatefulWidget {
  final String crossaxiscount,title;
-  const BoardBoxes({Key? key,required this.crossaxiscount,required this.title}):super(key: key);
+  const BoardBoxes({Key? key,required this.crossaxiscount,required this.title,}):super(key: key);
   @override
   _BoardBoxesState createState() => _BoardBoxesState();
 }
@@ -105,37 +106,38 @@ class _BoardBoxesState extends State<BoardBoxes> {
           SizedBox(
             height: size.height * 0.02,
           ),
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: int.parse(widget.crossaxiscount),
-              crossAxisSpacing: 4.0,
-              mainAxisSpacing: 4.0,
-            ),
-            itemCount: int.parse(widget.crossaxiscount) *
-                int.parse(widget.crossaxiscount),
-            //int.parse(widget.IC)
-            itemBuilder: (BuildContext context, int index) {
-              int row = index ~/ int.parse(widget.crossaxiscount);
-              int col = index % int.parse(widget.crossaxiscount);
-              return GestureDetector(
-                onTap: () => _handleTap(row, col),
-                child: Container(
-                  color: Colors.black,
-                  child: Center(
-                    child: Text(_board[row][col], style: const TextStyle(
-                        fontSize: 35, color: Colors.white)),
+          Expanded(
+            child: GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: int.parse(widget.crossaxiscount),
+                crossAxisSpacing: 4.0,
+                mainAxisSpacing: 4.0,
+              ),
+              itemCount: int.parse(widget.crossaxiscount) *
+                  int.parse(widget.crossaxiscount),
+              //int.parse(widget.IC)
+              itemBuilder: (BuildContext context, int index) {
+                int row = index ~/ int.parse(widget.crossaxiscount);
+                int col = index % int.parse(widget.crossaxiscount);
+                return GestureDetector(
+                  onTap: () => _handleTap(row, col),
+                  child: Container(
+                    color: Colors.black,
+                    child: Center(
+                      child: Text(_board[row][col], style: const TextStyle(
+                          fontSize: 35, color: Colors.white)),
+                    ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ],
       ),
     );
   }
-
   void _handleTap(int row, int col) {
     if (tap % 2 == 0) {
       if (_board[row][col] == '') {

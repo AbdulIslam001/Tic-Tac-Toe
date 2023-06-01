@@ -20,20 +20,25 @@ class Button extends StatelessWidget {
             color: Colors.orangeAccent,
             borderRadius: BorderRadius.circular(15),
           ),
-          height: size.height*0.06,
+          height: size.height*0.07,
           width: size.width*0.8,
           child: Row(
+//            crossAxisAlignment: CrossAxisAlignment.center,
+//            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(icon),
-              SizedBox(
+              /*SizedBox(
                 width:size.width*0.25,
+              ),*/
+              Expanded(
+                child: Center(
+                    child:
+                loading ? const CircularProgressIndicator(
+                  strokeWidth: 3,
+                  color: Colors.red,
+                )
+                    : Text(title,style:const TextStyle(color: Colors.red),textAlign: TextAlign.center,)),
               ),
-              Center(child:
-              loading ? const CircularProgressIndicator(
-                strokeWidth: 3,
-                color: Colors.red,
-              )
-                  : Text(title,style:const TextStyle(color: Colors.red),)),
             ],
           ),
         ),

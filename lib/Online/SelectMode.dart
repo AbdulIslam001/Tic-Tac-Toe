@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import '../gameScreen/Board.dart';
 import '../gameScreen/gameEnterenceScreen.dart';
@@ -5,7 +7,8 @@ import '../imagesString.dart';
 
 
 class SelectMode extends StatefulWidget {
-  const SelectMode({Key? key}) : super(key: key);
+  String?ip;
+  SelectMode({Key? key, this.ip}) : super(key: key);
   @override
   _SelectModeState createState() => _SelectModeState();
 }
@@ -15,6 +18,7 @@ class _SelectModeState extends State<SelectMode> {
   List<String> listitems = ["3x3", "6x6", "9x9"];
   String selectval = "3x3";
   bool loading=false;
+  late Socket socket;
   @override
   Widget build(BuildContext context) {
     Size size=MediaQuery.of(context).size;
@@ -95,12 +99,18 @@ class _SelectModeState extends State<SelectMode> {
                     SizedBox(
                       width:size.width*0.10,
                     ),
-                    Center(child:
-                    loading ? const CircularProgressIndicator(
-                      strokeWidth: 3,
-                      color: Colors.red,
-                    )
-                        : const Text("Play",style:TextStyle(color: Colors.red,fontSize: 30),)),
+                    InkWell(
+                      onTap: ()async{
+                        socket = await Socket.connect(widget.ip.toString(),9254);
+                        sendDataToServer();
+                      },
+                      child: Center(child:
+                      loading ? const CircularProgressIndicator(
+                        strokeWidth: 3,
+                        color: Colors.red,
+                      )
+                          : const Text("Play",style:TextStyle(color: Colors.red,fontSize: 30),)),
+                    ),
                   ],
                 ),
               ),
@@ -110,8 +120,10 @@ class _SelectModeState extends State<SelectMode> {
       ),
     );
   }
+  void sendDataToServer() async {
+    socket.write(selectval);
+  }
 }
-
 container(String img,VoidCallback ontaped){
   return Center(
     child: GestureDetector(
@@ -129,4 +141,3 @@ container(String img,VoidCallback ontaped){
     ),
   );
 }
-//https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=70c1baa985554326b5cbe3719afbbe56

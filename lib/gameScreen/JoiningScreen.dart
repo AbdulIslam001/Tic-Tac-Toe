@@ -1,8 +1,7 @@
 import 'dart:io';
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:tic_tac_toe_game/cutomWidget/Button.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'onlineGameBoard.dart';
 
 
 class JoiningScreen extends StatefulWidget {
@@ -15,18 +14,17 @@ class JoiningScreen extends StatefulWidget {
 class _JoiningScreenState extends State<JoiningScreen> {
   final _ip=TextEditingController();
   final _portNumber=TextEditingController();
-  final bool _loading = false;
+  int count=0;
+  String receiveddata='';
   late Socket socket;
   String message = 'Connecting to server...';
   @override
   void dispose() {
-    socket?.destroy();
     super.dispose();
   }
   @override
-  void initState() {
+  void initState(){
     super.initState();
-    connectToServer();
   }
   @override
   Widget build(BuildContext context) {
@@ -67,8 +65,14 @@ class _JoiningScreenState extends State<JoiningScreen> {
               const SizedBox(
                 height: 30,
               ),
-              Button(title: "Enter", ontap: (){
-                  connectToServer();
+              Button(title: "Enter", ontap: ()async{
+                socket = await Socket.connect(_ip.text.toString(),9254);
+                receiveDataFromServer();
+                Future.delayed(const Duration(seconds: 1),(){
+                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+                    return OnlineBoardBoxes(crossaxiscount: "6",ip: _ip.text.toString(),symbol: receiveddata,socket: socket,);
+                  }));
+                });
               })
             ],
           ),
@@ -76,41 +80,15 @@ class _JoiningScreenState extends State<JoiningScreen> {
       ),
     );
   }
-/*  Future<void> connectToServer() async {
-    final socket = await Socket.connect(_ip.toString(), 9254);
-    print("connected to Server");
-    try{
-      socket.write("Abdul Islam Ghani");
-      socket.listen((data) {
-//        String receivedData = utf8.decode(data);
-        print('Received data: $data');
-      },
-        onError: (error) {
-          print('Error: $error');
-        },
-        onDone: () {
-          print('Connection closed');
-        },
-      );
-    }catch(e){
-      print(e.toString());
-    }
-    socket.close();
+  //sendDataToServer
+/*  void sendDataToServer() async {
+    socket.write("Player 1");
   }*/
-  Future<void> connectToServer() async {
-    try {
-      socket = await Socket.connect(_ip.toString(), 9250);
-      setState(() {
-        message = 'Connected to server';
-      });
-
-      // Use the socket for communication
-      // e.g., socket.write('Hello server');
-      //       socket.listen((data) => print('Received: $data'));
-    } catch (e) {
-      setState(() {
-        message = 'Error: $e';
-      });
-    }
+  void receiveDataFromServer(){
+      socket.listen((List<int> data) {
+      receiveddata = String.fromCharCodes(data);
+      print("Data Received : "+receiveddata);
+    },
+    );
   }
 }
