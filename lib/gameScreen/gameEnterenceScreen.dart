@@ -127,7 +127,7 @@ class _GameEntranceScreenState extends State<GameEntranceScreen> {
             SizedBox(
                 height: MediaQuery.of(context).size.height*0.03
             ),
-            Button(title:"Tournament",loading:_loading2,ontap:(){
+/*            Button(title:"Tournament",loading:_loading2,ontap:(){
               setState(() {
                 _loading2=true;
               });
@@ -135,7 +135,7 @@ class _GameEntranceScreenState extends State<GameEntranceScreen> {
               setState(() {
                 _loading2=false;
               });
-            },)
+            },)*/
           ],
         ),
       ),

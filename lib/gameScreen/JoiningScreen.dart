@@ -70,7 +70,7 @@ class _JoiningScreenState extends State<JoiningScreen> {
                 receiveDataFromServer();
                 Future.delayed(const Duration(seconds: 1),(){
                   Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
-                    return OnlineBoardBoxes(crossaxiscount: "6",ip: _ip.text.toString(),symbol: receiveddata,socket: socket,);
+                    return OnlineBoardBoxes(crossAxisCount: "6",ip: _ip.text.toString(),symbol: receiveddata,socket: socket,);
                   }));
                 });
               })

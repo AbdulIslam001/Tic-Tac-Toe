@@ -1,15 +1,15 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:tic_tac_toe_game/gameScreen/resultScreen.dart';
 import '../Offline/SelectGameMode.dart';
 
 class OnlineBoardBoxes extends StatefulWidget {
-  final String crossaxiscount,symbol;
+  final String crossAxisCount,symbol;
   final String ip;
   final Socket socket;
-  const OnlineBoardBoxes({Key? key,required this.crossaxiscount,required this.symbol,required this.ip,required this.socket}):super(key: key);
+  const OnlineBoardBoxes({Key? key,required this.crossAxisCount,required this.symbol,required this.ip,required this.socket}):super(key: key);
   @override
   _OnlineBoardBoxesState createState() => _OnlineBoardBoxesState();
 }
@@ -18,61 +18,45 @@ class _OnlineBoardBoxesState extends State<OnlineBoardBoxes> {
   String winner = '';
   late List<List<String>> receivedData;
   GlobalKey<State> waitingDialogKey = GlobalKey<State>();
-  @override
+  StreamController<List<List<String>>> _streamController = StreamController<List<List<String>>>.broadcast();
+  Stream<List<List<String>>> get itemStream => _streamController.stream;
+  late String receivedId;
+  late final String yourId;
 
-  BuildContext? waitingDialogContext;
-
-  void showWaitingDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        waitingDialogContext = context; // Store the context
-        return const AlertDialog(
-          title: Text('Waiting for another player'),
-          content: Text('Please wait until the next player joins.'),
-        );
-      },
-    );
-  }
-
-  void secondPlayerJoined() {
-    if (waitingDialogContext != null) {
-      Navigator.pop(waitingDialogContext!);
-    }
-  }
-
+  //  BuildContext? waitingDialogContext;
   @override
   void initState() {
-    //print(id);
     // TODO: implement initState
+    receivedId=widget.symbol;
+    yourId=widget.symbol;
+    _board = List.generate(int.parse(widget.crossAxisCount), (index) =>
+        List.filled(int.parse(widget.crossAxisCount), ''));
     super.initState();
-    _board = List.generate(int.parse(widget.crossaxiscount), (index) =>
-        List.filled(int.parse(widget.crossaxiscount), ''));
   }
- late int id;
-String you='X';
-String opponent='O';
+  @override
+  void dispose() {
+    _streamController.close();
+    super.dispose();
+  }
+   String you = 'X';
+   String opponent = 'O';
+  //print();
   @override
   Widget build(BuildContext context) {
-    String receivedId=widget.symbol;
-    if(receivedId=='0'){
+     bool isYourTurn=false;
+    print("Your Id : $yourId");
+    if (yourId == '0') {
       setState(() {
-        print(widget.symbol);
-        id=int.parse(widget.symbol);
-        you='O';
-        opponent='X';
+        you = 'O';
+        opponent = 'X';
       });
-    //  showWaitingDialog(context);
-    }else{
-      setState(() {
-        id=1;
-        opponent='O';
-        you='X';
-      });
-   //   secondPlayerJoined();
     }
-    receivedId='';
+    if(yourId=='1'){
+      setState(() {
+        you = 'X';
+        opponent = 'O';
+      });
+    }
     Size size = MediaQuery
         .of(context)
         .size;
@@ -82,7 +66,8 @@ String opponent='O';
           showDialog(context: context, builder: (BuildContext context) {
             return AlertDialog(
               backgroundColor: Colors.white,
-              title: const Text("Are receivedId sure receivedId want to exit game?"),
+              title: const Text(
+                  "Are receivedId sure receivedId want to exit game?"),
               actions: <Widget>[
                 TextButton(onPressed: () {
                   Navigator.push(context, MaterialPageRoute(
@@ -98,7 +83,7 @@ String opponent='O';
         centerTitle: true,
         automaticallyImplyLeading: false,
         title:
-        const Text("6x6", style:TextStyle(
+        const Text("6x6", style: TextStyle(
             color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30)),
         elevation: 0,
         backgroundColor: Colors.black,
@@ -123,8 +108,9 @@ String opponent='O';
                       color: Colors.black12,
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child:Center(child: Text(you,
-                        style: const TextStyle(color: Colors.red, fontSize: 40))),
+                    child: Center(child: Text(you,
+                        style: const TextStyle(
+                            color: Colors.red, fontSize: 40))),
                   ),
 //                  Stream.periodic(Duration(seconds: 1),(int count){})
                 ],
@@ -144,7 +130,8 @@ String opponent='O';
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Center(child: Text(opponent,
-                        style: const TextStyle(color: Colors.red, fontSize: 40))),
+                        style: const TextStyle(
+                            color: Colors.red, fontSize: 40))),
                   ),
                 ],
               )
@@ -154,74 +141,101 @@ String opponent='O';
             height: size.height * 0.02,
           ),
           Expanded(
-            child: GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: int.parse(widget.crossaxiscount),
-                crossAxisSpacing: 4.0,
-                mainAxisSpacing: 4.0,
-              ),
-              itemCount: int.parse(widget.crossaxiscount) *
-                  int.parse(widget.crossaxiscount),
-              //int.parse(widget.IC)
-              itemBuilder: (BuildContext context, int index) {
-                int row = index ~/ int.parse(widget.crossaxiscount);
-                int col = index % int.parse(widget.crossaxiscount);
-                String data=_board[row][col];
-                return GestureDetector(
-                  onTap: (){
-                    setState(() {
-                      _handleTap(row, col);
-                    });
-                  },
-                  child: Container(
-                    color: Colors.black,
-                    child: Center(
-                      child: Text(_board[row][col], style: const TextStyle(
-                          fontSize: 35, color: Colors.white)),
+            child: StreamBuilder(
+              stream: itemStream,
+              builder:(context , snapshot) {
+                if(snapshot.hasData){
+                  receiveDataFromServer();
+                  return GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: int.parse(widget.crossAxisCount),
+                      crossAxisSpacing: 4.0,
+                      mainAxisSpacing: 4.0,
                     ),
-                  ),
-                );
+                    itemCount: int.parse(widget.crossAxisCount) *
+                        int.parse(widget.crossAxisCount),
+                    //int.parse(widget.IC)
+                    itemBuilder: (BuildContext context, int index) {
+                      int row = index ~/ int.parse(widget.crossAxisCount);
+                      int col = index % int.parse(widget.crossAxisCount);
+                      //  String data = _board[row][col];
+                      return GestureDetector(
+                        onTap: () {
+                            _handleTap(row, col,index);
+                            //receiveDataFromServer();
+                        },
+                        child: Container(
+                          color: Colors.black,
+                          child: Center(
+                            child: Text(_board[row][col], style: const TextStyle(
+                                fontSize: 35, color: Colors.white)),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }else{
+                  return GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: int.parse(widget.crossAxisCount),
+                      crossAxisSpacing: 4.0,
+                      mainAxisSpacing: 4.0,
+                    ),
+                    itemCount: int.parse(widget.crossAxisCount) *
+                        int.parse(widget.crossAxisCount),
+                    //int.parse(widget.IC)
+                    itemBuilder: (BuildContext context, int index) {
+                      int row = index ~/ int.parse(widget.crossAxisCount);
+                      int col = index % int.parse(widget.crossAxisCount);
+                      //  String data = _board[row][col];
+                      return GestureDetector(
+                        onTap: () async{
+                          if(receivedId==yourId.toString()){
+                            receiveDataFromServer();
+                            isYourTurn=true;
+                          }
+                          if(isYourTurn) {
+                            _handleTap(row, col,index);
+                              if(receivedId=='0')
+                              {
+                                receivedId='1';
+                              }else{
+                                receivedId='0';
+                              }
+                          }
+                        },
+                        child: Container(
+                          color: Colors.black,
+                          child: Center(
+                            child: Text(_board[row][col], style: const TextStyle(
+                                fontSize: 35, color: Colors.white)),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }
               },
-            ),
+            )
           ),
         ],
       ),
     );
   }
-/*  void receiveDataFromServer(){
-    widget.socket?.listen((List<int> data) {
-      receivedData = String.fromCharCodes(data);
-      // Handle received string data
-      print(receivedData);
-    },
-    );
-  }*/
-  /*void sendDataToServer( list) async {
-    String data=jsonEncode(list);
-    widget.socket.write(data);
-  }*/
-  void _handleTap(int row, int col) {
-    print(_board);
-    print(row);
-    print(col);
-    if(_board[row][col]=='' && id==0){
+  void _handleTap(int row, int col,int ind) {
+      if (_board[row][col] == '') {
         setState(() {
-          _board[row][col]=you.toString();
-        });
-    }else if(_board[row][col]==''){
-      if(id==1){
-        setState(() {
-          _board[row][col]=you.toString();
+          _board[row][col] = you.toString();
         });
       }
-    }
-    Map<String, dynamic> msg = {
-      'list': _board,
-      'Id': id,
+    Map<String, String> msg = {
+      'index': ind.toString(),
+      'Id': receivedId,
     };
-
     String json = jsonEncode(msg);
     widget.socket.write(json.toString());
     checkForWin6x6();
@@ -322,13 +336,18 @@ String opponent='O';
       }
     }
   }
-  void receiveDataFromServer(){
-    widget.socket.listen((List<int> data) {
-      String jsonString = utf8.decode(data);
-      receivedData = jsonDecode(jsonString);
+  Future<void>  receiveDataFromServer()async {
+     widget.socket.listen((List<int> data) {
+      Map<String, dynamic> received = jsonDecode(data as String);
+      print(received[0]);
+      for(int i=0;i<36;i++){
+        _board[received[0]]=opponent as List<String>;
+      }
+      receivedId=received[0];
       setState(() {
-      _board.addAll(receivedData);
+        _board[received[0]]=opponent as List<String> ;
       });
+      _streamController.add(received["index"]);
     },
     );
   }
